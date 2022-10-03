@@ -1,0 +1,2 @@
+enderecoDestino1@provedor.com
+enderecoDestino2@provedor.com
