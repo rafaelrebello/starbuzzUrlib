@@ -2,8 +2,10 @@ import urllib.request
 import time
 import smtplib
 
+precoAlvo = 4.70 #preço máximo para que a mensagem seja enviada
 
-def criarMensagem():
+
+def criarMensagem():  # cria o corpo e assunto do email a ser enviado
     body = f"""Subject: Compre Cafe
 
 Os precos estao abaixo de $4.70, compre.
@@ -12,12 +14,12 @@ Mensagem automatica"""
     return body
 
 
-def obterLogin():
+def obterLogin():  # obtém login e senha do arquivo enderecoEmail.txt
     with open("enderecoEmail.txt", "r") as file:
         return file.read().split(" ")
 
 
-def obterDestinos():
+def obterDestinos():  # obtém destinos do arquivo destinos.txt
     destinos = []
     with open("destinos.txt", "r") as f:
         for line in f:
@@ -25,7 +27,7 @@ def obterDestinos():
     return destinos
 
 
-def mensagem():
+def mensagem():  # conexão smtp
     mail, senha = obterLogin()
     destinos = obterDestinos()
     corpo = criarMensagem()
@@ -58,11 +60,10 @@ while True:
 
     print(f"Preço normal: {precoNormal}  Preço Especial: {precoEspecial} ")
     print(f"Preço obtido em {dia}/{mes}  {hora}:{minuto}:{segundo}")
+    print("------")
 
-    print(criarMensagem())
-
-    if (precoNormal < 4.70) or (precoEspecial < 4.70):
+    if (precoNormal < precoAlvo) or (precoEspecial < precoAlvo):
         mensagem()
         break
 
-    time.sleep(2)
+    time.sleep(10)
